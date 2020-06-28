@@ -1,0 +1,14 @@
+Package: MapRtools
+Title: Tools for genetic mapping
+Version: 0.10
+Author: Jeffrey B. Endelman
+Maintainer: Jeffrey Endelman <endelman@wisc.edu>
+Description: Tools for genetic mapping
+Depends: R (>= 3.5.0)
+License: GPL-3
+LazyData: true
+RoxygenNote: 7.1.0
+Encoding: UTF-8
+Imports: CVXR, splines2
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
