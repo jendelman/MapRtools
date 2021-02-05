@@ -9,6 +9,6 @@ This package was developed at the University of Wisconsin-Madison for teaching a
 To install and load the package:
 ```R
 install.packages("devtools")
-devtools::install_github("jendelman/MapRtools", build_vignettes=FALSE)
+devtools::install_github("jendelman/MapRtools")
 library(MapRtools)
 ```

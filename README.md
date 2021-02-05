@@ -11,6 +11,6 @@ To install and load the package:
 
 ``` r
 install.packages("devtools")
-devtools::install_github("jendelman/MapRtools", build_vignettes=FALSE)
+devtools::install_github("jendelman/MapRtools")
 library(MapRtools)
 ```
