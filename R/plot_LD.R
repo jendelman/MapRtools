@@ -9,14 +9,18 @@
 #' @param max.pair maximum number of r2 pairs for the spline
 #' @param dof degrees of freedom for the spline
 #' 
-#' @return ggplot object 
+#' @return List containing
+#' \describe{
+#' \item{plot}{ggplot object}
+#' \item{spline}{data frame with fitted values for the spline}
+#' }
 #' 
 #' @export
 #' @import ggplot2
 #' @import scam
 #' @importFrom stats dist
 
-plot_LD <- function(r2,map,max.pair=1e4,dof=5) {
+plot_LD <- function(r2,map,max.pair=1e4,dof=8) {
   
   map$marker <- as.character(map$marker)
   map <- map[map$marker %in% rownames(r2),]
@@ -46,6 +50,8 @@ plot_LD <- function(r2,map,max.pair=1e4,dof=5) {
   scam.ans <- scam(formula=r2~s(d,bs=c("mdcx"),k=dof),data=result[sample(1:nrow(result),max.pair),])
   dmax <- max(result$d)
   predans <- predict.scam(scam.ans,newdata=data.frame(d=seq(0,dmax,length.out = 500)))
-  p <- p + geom_line(data=data.frame(d=seq(0,dmax,length.out = 500),r2=predans),colour="red")
-  return(p)
+  spline.data <- data.frame(d=seq(0,dmax,length.out = 500),r2=predans)
+  p <- p + geom_line(data=spline.data,colour="red")
+  colnames(spline.data) <- c("distance","r2")
+  return(list(plot=p,spline=spline.data))
 }

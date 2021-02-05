@@ -1,0 +1,3 @@
+Changes in 0.12
+* Modified output format for plot_LD to return the plot and spline data
+* Fixed bug in plot_haplo for multiple chromosomes

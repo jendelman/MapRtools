@@ -4,7 +4,7 @@
 \alias{plot_LD}
 \title{Plot LD vs distance}
 \usage{
-plot_LD(r2, map, max.pair = 10000, dof = 5)
+plot_LD(r2, map, max.pair = 10000, dof = 8)
 }
 \arguments{
 \item{r2}{squared correlation matrix}
@@ -16,7 +16,11 @@ plot_LD(r2, map, max.pair = 10000, dof = 5)
 \item{dof}{degrees of freedom for the spline}
 }
 \value{
-ggplot object
+List containing
+\describe{
+\item{plot}{ggplot object}
+\item{spline}{data frame with fitted values for the spline}
+}
 }
 \description{
 Plot LD vs distance
