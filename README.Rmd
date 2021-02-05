@@ -1,11 +1,14 @@
 ---
-title: "R Package GWASpoly"
+author: "Jeffrey Endelman"
+title: "R package MapRtools"
 output: github_document
 ---
 
-This package was designed for genome-wide association studies in  autopolyploids (and also works for diploids). A [vignette is available](https://jendelman.github.io/GWASpoly/GWASpoly.html) to illustrate the basic workflow using the potato dataset that comes with the package. More detailed information is available in the [package reference manual](https://jendelman.github.io/GWASpoly/GWASpoly_manual.pdf).
+This package was developed at the University of Wisconsin-Madison for teaching and research on genetic mapping. Consult the [reference manual](https://jendelman.github.io/MapRtools/MapRtools_manual.pdf) for a list of functions and their syntax.
 
-If you use the package in a publication, please cite
-Rosyara et al. (2016) Plant Genome 9 doi:10.3835/plantgenome2015.08.0073
-
-Development of the package was supported by the USDA NIFA SCRI (Award #2011-51181-30629) and Hatch (Accession #1002731) programs.
+To install and load the package:
+```R
+install.packages("devtools")
+devtools::install_github("jendelman/MapRtools", build_vignettes=FALSE)
+library(MapRtools)
+```
