@@ -47,6 +47,7 @@ plot_LD <- function(r2,map,max.pair=1e4,dof=8) {
   p <- ggplot(data=result,aes(x=d,y=r2)) + stat_binhex(mapping=aes(colour=..count..)) + ylab(expression(r^2)) + xlab("Distance") + theme_bw() + ylim(0,1)
   
   #Spline
+  max.pair <- min(max.pair,nrow(result))
   scam.ans <- scam(formula=r2~s(d,bs=c("mdcx"),k=dof),data=result[sample(1:nrow(result),max.pair),])
   dmax <- max(result$d)
   predans <- predict.scam(scam.ans,newdata=data.frame(d=seq(0,dmax,length.out = 500)))

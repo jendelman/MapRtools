@@ -11,7 +11,7 @@ LL(r, counts, pop.type)
 
 \item{counts}{3x3 contingency table for haplotype dosages 0,1,2}
 
-\item{pop.type}{One of the following: "DH","BC","F2"}
+\item{pop.type}{One of the following: "DH","BC","F2","RIL.self","RIL.sib"}
 }
 \value{
 log-likelihood
@@ -20,5 +20,5 @@ log-likelihood
 Log-likelihood for inbred line-derived mapping populations
 }
 \details{
-The argument \code{counts} can be constructed using the \code{table} function for two markers. Genotype coding must represent dosage of a founder haplotype. For BC populations, possible allele dosages are {0,1}. For DH pops, it is {0,2}. For F2 pops, it is {0,1,2}.
+The argument \code{counts} can be constructed using the \code{table} function for two markers. Genotype coding must represent dosage of a founder haplotype. For BC populations, possible allele dosages are 0,1. For DH and RIL pops, it is 0,2. For F2 pops, it is 0,1,2.
 }

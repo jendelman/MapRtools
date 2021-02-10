@@ -22,5 +22,5 @@ Matrix with RF or LOD
 Max Likelihood Estimation of Linkage
 }
 \details{
-Can be used to estimate either the LOD score or recombination frequency, depending on the value of \code{LOD}. Genotype coding must represent dosage of a founder haplotype. For BC populations, possible allele dosages are {0,1}. For DH pops, it is {0,2}. For F2 pops, it is {0,1,2}.
+Can be used to estimate either the LOD score or recombination frequency, depending on the value of \code{LOD}. Genotype coding must represent dosage of a founder haplotype. For BC populations, possible allele dosages are 0,1. For DH and RIL pops, it is 0,2. For F2 pops, it is 0,1,2.
 }

@@ -2,7 +2,7 @@
 #' 
 #' Max Likelihood Estimation of Linkage
 #'
-#' Can be used to estimate either the LOD score or recombination frequency, depending on the value of \code{LOD}. Genotype coding must represent dosage of a founder haplotype. For BC populations, possible allele dosages are {0,1}. For DH pops, it is {0,2}. For F2 pops, it is {0,1,2}.
+#' Can be used to estimate either the LOD score or recombination frequency, depending on the value of \code{LOD}. Genotype coding must represent dosage of a founder haplotype. For BC populations, possible allele dosages are 0,1. For DH and RIL pops, it is 0,2. For F2 pops, it is 0,1,2.
 #'
 #' @param geno Matrix of haplotype dosages (markers x indiv)
 #' @param pop.type One of the following: "DH","BC","F2"
@@ -25,12 +25,40 @@ MLEL <- function(geno,pop.type,LOD,n.core=1) {
   
   f1 <- function(x,geno,pop.type,LOD=FALSE) {
     counts <- table(factor(geno[x[1],],levels=0:2),factor(geno[x[2],],levels=0:2))
-    ans <- optimize(f=LL,interval=c(0,0.5),counts=counts,pop.type=pop.type,maximum=TRUE)
-    if (LOD) {
-      tmp <- ans$objective-LL(r=0.5,counts=counts,pop.type=pop.type)
-      return(max(tmp,0))
+    
+    if (pop.type=="F2") {
+      ans <- optimize(f=LL,interval=c(0,0.5),counts=counts,pop.type=pop.type,maximum=TRUE)
+      if (LOD) {
+        tmp <- ans$objective-LL(r=0.5,counts=counts,pop.type=pop.type)
+        return(max(tmp,0))
+      } else {
+        return(ans$maximum)
+      }
     } else {
-      return(ans$maximum)
+      if (pop.type %in% c("DH","RIL.self","RIL.sib")) {
+        R <- counts["0","2"] + counts["2","0"]  #N02 + N20
+        NR <- counts["0","0"] + counts["2","2"] #N00 + N22
+      }
+      if (pop.type=="BC") {
+        R <- counts["0","1"] + counts["1","0"]  #N02 + N20
+        NR <- counts["0","0"] + counts["1","1"] #N00 + N22
+      }
+      if (pop.type %in% c("BC","DH")) {
+        rML <- R/(R+NR)
+      }
+      if (pop.type=="RIL.self") {
+        rML <- R/2/NR
+      }
+      if (pop.type=="RIL.sib") {
+        rML <- R/(4*NR-2*R)
+      }
+      rML <- min(rML,0.5)
+      if (LOD) {
+        tmp <- LL(r=rML,counts=counts,pop.type=pop.type) - LL(r=0.5,counts=counts,pop.type=pop.type)
+        return(max(tmp,0))
+      } else {
+        return(rML)
+      }
     }
   }
   
