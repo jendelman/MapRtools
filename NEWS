@@ -1,6 +1,7 @@
 Changes in 0.14
 * Fixed bug in plot_LD for small datasets
 * Added RILs to LL and MLEL
+* Added LDbin function
 
 Changes in 0.13
 * Added functions plot_square, LL, MLEL
