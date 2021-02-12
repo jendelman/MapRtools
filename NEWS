@@ -1,3 +1,6 @@
+Changes in 0.15
+* Added functions LG, LGtrim, plot_genofreq
+
 Changes in 0.14
 * Fixed bug in plot_LD for small datasets
 * Added RILs to LL and MLEL
