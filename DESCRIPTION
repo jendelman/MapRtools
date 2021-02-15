@@ -1,6 +1,6 @@
 Package: MapRtools
 Title: Tools for genetic mapping
-Version: 0.15
+Version: 0.16
 Author: Jeffrey B. Endelman
 Maintainer: Jeffrey Endelman <endelman@wisc.edu>
 Description: Tools for genetic mapping
@@ -9,6 +9,6 @@ License: GPL-3
 LazyData: true
 RoxygenNote: 7.1.1
 Encoding: UTF-8
-Imports: ggplot2, scam
+Imports: ggplot2, scam, seriation
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr

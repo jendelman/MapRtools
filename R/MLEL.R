@@ -71,7 +71,7 @@ MLEL <- function(geno,pop.type,LOD,n.core=1) {
   if (LOD) {
     diag(outmat) <- NA
   } else {
-    diag(outmat) <- 1
+    diag(outmat) <- 0
   }
   colnames(outmat) <- rownames(outmat) <- rownames(geno)
   return(outmat)
