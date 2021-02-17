@@ -1,3 +1,6 @@
+Changes in 0.17
+* Added map_fn for map functions
+
 Changes in 0.16
 * Corrected error for diagonal elements of the RF matrix from MLEL
 * Added function order_markers
