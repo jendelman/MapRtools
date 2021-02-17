@@ -28,7 +28,7 @@ LG <- function(LODmat,thresh=seq(2,20,by=2)) {
     LGans[i,1:max(tmp)] <- sort(table(tmp),decreasing=T)
   }
   if (n.thresh==1) {
-    out <- data.frame(marker=rownames(LODmat),LG=as.integer(tmp))
+    out <- data.frame(marker=rownames(LODmat),LG=as.integer(tmp),stringsAsFactors = F)
     tab <- table(out$LG)
     nG <- length(tab)
     tmp <- match(1:nG,order(tab,decreasing=T))
