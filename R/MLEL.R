@@ -54,7 +54,11 @@ MLEL <- function(geno,pop.type,LOD,n.core=1) {
       }
       rML <- min(rML,0.5)
       if (LOD) {
-        tmp <- LL(r=rML,counts=counts,pop.type=pop.type) - LL(r=0.5,counts=counts,pop.type=pop.type)
+        if (rML==0) {
+          tmp <- Inf 
+        } else {
+          tmp <- LL(r=rML,counts=counts,pop.type=pop.type) - LL(r=0.5,counts=counts,pop.type=pop.type)
+        }
         return(max(tmp,0))
       } else {
         return(rML)
@@ -69,7 +73,7 @@ MLEL <- function(geno,pop.type,LOD,n.core=1) {
   outmat[cbind(tmp[,1],tmp[,2])] <- ans
   outmat <- outmat + t(outmat)  #symmetric
   if (LOD) {
-    diag(outmat) <- NA
+    diag(outmat) <- Inf
   } else {
     diag(outmat) <- 0
   }

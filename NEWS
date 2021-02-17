@@ -1,3 +1,6 @@
+Changes in 0.18
+* Modified MLEL and plot_square to handle LOD scores for markers in complete LD
+
 Changes in 0.17
 * Added map_fn for map functions
 

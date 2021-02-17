@@ -13,6 +13,7 @@
 
 plot_square <- function(data,lims=NULL) {
   z <- as.vector(data)
+  z <- ifelse(z==Inf,NA,z)
   if (is.null(lims)) {
     lims <- c(0,mean(z,na.rm=T),max(z,na.rm=T))
   }
