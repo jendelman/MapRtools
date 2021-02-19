@@ -4,10 +4,12 @@
 \alias{genetic_map}
 \title{Multi-point estimation of a genetic map}
 \usage{
-genetic_map(x, n.point = 3)
+genetic_map(x, LOD, n.point = 5)
 }
 \arguments{
 \item{x}{matrix of pairwise map distances (cM) between the marker-bins for one chromosome}
+
+\item{LOD}{matrix of LOD scores between marker-bins}
 
 \item{n.point}{Number of points used for estimation}
 }
@@ -18,5 +20,5 @@ data frame with columns marker,position (in cM)
 Multi-point estimation of a genetic map
 }
 \details{
-Argument \code{n.point} controls how many pairwise distances are used in the linear regression. \code{n.point=2} means only adjacent bins; \code{n.point=3}  means adjacent bins and bins with one intervening marker, etc. Marker names taken from the rownames attribute of \code{x}. For multi-point estimation to be effective, \code{x} should be based on marker-bins.
+Uses LOD-score weighted least-squares regression method described by Stam (1993). Markers must be binned (e.g., using \code{\link{LDbin}}) for this function to work properly. Argument \code{n.point} controls how many pairwise distances are used in the linear regression. \code{n.point=2} means only adjacent bins; \code{n.point=3}  means adjacent bins and bins with one intervening marker, etc. Marker names taken from the rownames attribute of \code{x}.
 }
