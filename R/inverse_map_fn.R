@@ -15,7 +15,7 @@ inverse_map_fn <- function(x,model) {
     if (model=="HALDANE") {r <- (1-exp(-2*x))/2}
     if (model=="KOSAMBI") {r <- (exp(2*x)-exp(-2*x))/(exp(2*x)+exp(-2*x))/2}
   } else {
-    x <- NA
+    r <- NA
   }
   return(r) 
 }
