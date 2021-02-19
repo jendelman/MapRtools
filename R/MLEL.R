@@ -19,10 +19,7 @@ MLEL <- function(geno,pop.type,LOD,n.core=1) {
   m <- nrow(geno)
   tmp <- expand.grid(col=1:m,row=1:m)
   tmp <- tmp[tmp$row > tmp$col,]  #only need lower triangular
-  
-  cl <- makeCluster(n.core)
-  clusterExport(cl=cl,varlist="LL")
-  
+ 
   f1 <- function(x,geno,pop.type,LOD=FALSE) {
     counts <- table(factor(geno[x[1],],levels=0:2),factor(geno[x[2],],levels=0:2))
     
@@ -66,6 +63,8 @@ MLEL <- function(geno,pop.type,LOD,n.core=1) {
     }
   }
   
+  cl <- makeCluster(n.core)
+  clusterExport(cl=cl,varlist="LL")
   ans <- parRapply(cl,tmp,f1,geno=geno,pop.type=pop.type,LOD=LOD)
   stopCluster(cl)
   
