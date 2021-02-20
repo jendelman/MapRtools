@@ -1,3 +1,6 @@
+Changes in 0.20
+* Fixed bug in inverse_map_fn
+
 Changes in 0.19
 * Added functions: inverse_map_fn and genetic_map
 
