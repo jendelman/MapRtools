@@ -5,7 +5,7 @@
 #' Can be used to estimate either the LOD score or recombination frequency, depending on the value of \code{LOD}. Genotype coding must represent dosage of a founder haplotype. For BC populations, possible allele dosages are 0,1. For DH and RIL pops, it is 0,2. For F2 pops, it is 0,1,2.
 #'
 #' @param geno Matrix of haplotype dosages (markers x indiv)
-#' @param pop.type One of the following: "DH","BC","F2"
+#' @param pop.type One of the following: "DH","BC","F2","RIL.self","RIL.sib"
 #' @param LOD Logical, whether to return LOD (TRUE) or recomb freq (FALSE)
 #' @param n.core For parallel execution on multiple cores
 #' 
