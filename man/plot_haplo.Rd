@@ -2,12 +2,12 @@
 % Please edit documentation in R/plot_haplo.R
 \name{plot_haplo}
 \alias{plot_haplo}
-\title{Visualize haplotype dosage}
+\title{Graphical genotyping}
 \usage{
 plot_haplo(geno, map)
 }
 \arguments{
-\item{geno}{matrix of haplotype dosages (markers x indiv)}
+\item{geno}{genotype matrix (markers x indiv)}
 
 \item{map}{data frame with 3 columns (marker, chrom, position)}
 }
@@ -15,7 +15,7 @@ plot_haplo(geno, map)
 ggplot object
 }
 \description{
-Visualize haplotype dosage in diploid biparental population from two inbreds
+Graphical genotyping
 }
 \details{
 Input matrix \code{geno} should have rownames attribute that matches marker names in the first column of \code{map}.

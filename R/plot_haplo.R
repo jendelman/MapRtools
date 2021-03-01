@@ -1,10 +1,10 @@
-#' Visualize haplotype dosage
+#' Graphical genotyping
 #' 
-#' Visualize haplotype dosage in diploid biparental population from two inbreds
+#' Graphical genotyping
 #' 
 #' Input matrix \code{geno} should have rownames attribute that matches marker names in the first column of \code{map}. 
 #' 
-#' @param geno matrix of haplotype dosages (markers x indiv)
+#' @param geno genotype matrix (markers x indiv)
 #' @param map data frame with 3 columns (marker, chrom, position)
 #' 
 #' @return ggplot object 
@@ -15,8 +15,9 @@
 plot_haplo <- function(geno,map) {
   
   map$marker <- as.character(map$marker)
-  map <- map[map$marker %in% rownames(geno),]
-  geno <- geno[match(map$marker,rownames(geno)),]
+  markers <- rownames(geno)
+  stopifnot(markers %in% map$marker)
+  map <- map[map$marker %in% markers,]
   n <- ncol(geno)
   
   chroms <- unique(map$chrom)
@@ -26,8 +27,9 @@ plot_haplo <- function(geno,map) {
     ix <- which(map$chrom==chroms[i])
     m <- length(ix)
     x <- map$position[ix]
-    xmin <- c(0,x[-m] + diff(x)/2)
-    xmax <- c(xmin[-1],x[m])
+    d <- diff(x)/2
+    xmin <- c(x[1]-d[1],x[-m]+d)
+    xmax <- c(x[-m]+d,x[m]+d[m-1])
     plot.data <- rbind(plot.data,data.frame(z=factor(as.vector(geno[ix,])),chrom=chroms[i],xmin=xmin,xmax=xmax,ymin=rep(1:n-1,each=m),ymax=rep(1:n,each=m)))
   }
   plot.data$chrom <- factor(plot.data$chrom)

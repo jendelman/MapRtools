@@ -1,3 +1,6 @@
+Changes in 0.22
+* Added plot_genoprob and S1_haplo functions
+
 Changes in 0.21
 * Updated documentation
 

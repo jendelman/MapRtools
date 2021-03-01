@@ -4,23 +4,25 @@
 \alias{MLEL}
 \title{Max Likelihood Estimation of Linkage}
 \usage{
-MLEL(geno, pop.type, LOD, n.core = 1)
+MLEL(geno, pop.type, LOD, n.core = 1, adjacent = FALSE)
 }
 \arguments{
 \item{geno}{Matrix of haplotype dosages (markers x indiv)}
 
-\item{pop.type}{One of the following: "DH","BC","F2"}
+\item{pop.type}{One of the following: "DH","BC","F2","S1","RIL.self","RIL.sib"}
 
 \item{LOD}{Logical, whether to return LOD (TRUE) or recomb freq (FALSE)}
 
 \item{n.core}{For parallel execution on multiple cores}
+
+\item{adjacent}{Logical, should calculation be done for all pairs (FALSE) or adjacent (TRUE) markers}
 }
 \value{
-Matrix with RF or LOD
+If \code{adjacent} is FALSE, a matrix of recombination frequencies or LOD scores; otherwise, a three-column data frame with marker, the LOD or r value, and the phase ("c","r") with the previous marker in column 2
 }
 \description{
 Max Likelihood Estimation of Linkage
 }
 \details{
-Can be used to estimate either the LOD score or recombination frequency, depending on the value of \code{LOD}. Genotype coding must represent dosage of a founder haplotype. For BC populations, possible allele dosages are 0,1. For DH and RIL pops, it is 0,2. For F2 pops, it is 0,1,2.
+Can be used to estimate either the LOD score or recombination frequency, depending on the value of \code{LOD}. Genotype coding must represent dosage of a founder haplotype. For BC populations, possible allele dosages are 0,1. For DH and RIL pops, it is 0,2. For F2 and S1 pops, it is 0,1,2.
 }
