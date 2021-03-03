@@ -18,7 +18,7 @@ MLEL(geno, pop.type, LOD, n.core = 1, adjacent = FALSE)
 \item{adjacent}{Logical, should calculation be done for all pairs (FALSE) or adjacent (TRUE) markers}
 }
 \value{
-If \code{adjacent} is FALSE, a matrix of recombination frequencies or LOD scores; otherwise, a three-column data frame with marker, the LOD or r value, and the phase ("c","r") with the previous marker in column 2
+If \code{adjacent} is FALSE, a matrix of recombination frequencies or LOD scores; otherwise, a three-column data frame with marker, the LOD or r value, and the phase ("c","r") with the previous marker
 }
 \description{
 Max Likelihood Estimation of Linkage

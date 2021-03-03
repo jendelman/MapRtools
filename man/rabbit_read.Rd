@@ -4,18 +4,21 @@
 \alias{rabbit_read}
 \title{Parse output from RABBIT MagicReconstruct}
 \usage{
-rabbit_read(filename, outfile1 = "MLgeno.csv", outfile2 = NULL)
+rabbit_read(rabbit.file, ML.file = NULL, diaQTL.file = NULL)
 }
 \arguments{
-\item{filename}{name of RABBIT output file}
+\item{rabbit.file}{name of RABBIT output file}
 
-\item{outfile1}{name of ML genotype file to create}
+\item{ML.file}{name of most likely genotype file to create}
 
-\item{outfile2}{name of diaQTL genotype file to create}
+\item{diaQTL.file}{name of diaQTL genotype file to create}
+}
+\value{
+data frame defining the genotypes
 }
 \description{
 Parse output from RABBIT MagicReconstruct
 }
 \details{
-Generates output files with the maximum likelihood (ML) genotype (\code{out1file}) and genotype probabilities for the diaQTL package (\code{out2file}).
+Two different file formats can be created. The \code{ML.file} contains the most likely (i.e., posterior maximum) genotype for each individual at each marker. The \code{diaQTL.file} contains the full distribution of genotype probabilities in the format required by the diaQTL R package (\code{diaQTL.file}). The default value for each filename is NULL, which generates no file.
 }

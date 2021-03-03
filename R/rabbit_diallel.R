@@ -5,7 +5,7 @@
 #' Populations must be numbered in \code{ped} corresponding to their position in \code{geno}. Founders are not included in \code{ped}. All genotype matrices must have identical markers. Genetic map position should be in cM. Genotypes need to be coded according to RABBIT format. 
 #'
 #' @param ped data frame with pedigree (pop,parent1,parent2)
-#' @param geno named list of genotype matrices (markers x indiv), one for each population in \code{ped}
+#' @param geno list of genotype matrices (markers x indiv), one for each population in \code{ped}
 #' @param geno.founder matrix of genotype data for the founders (markers x indiv)
 #' @param map genetic map (marker,chromosome,position)
 #' @param outstem name for output files
@@ -50,12 +50,12 @@ rabbit_diallel <- function(ped,geno,geno.founder,map,outstem) {
   map <- map[match(marker,map$marker),]
   geno3 <- rbind(nfounder=c(nf,rep("",m-1)),t(map),geno2)
   geno3[4,] <- gsub(" ","",geno3[4,]) #removes whitespace
-  write.table(x=geno3,file=paste(outstem,"geno.csv",sep="_"),quote = FALSE,na="NN",col.names=FALSE,sep=",")
+  write.table(x=geno3,file=paste(outstem,"rabbit_geno.csv",sep=""),quote = FALSE,na="NN",col.names=FALSE,sep=",")
   
   ped4a <- rbind(c("Pedigree-Information","DesignPedigree",rep("",3)),colnames(ped2),ped2)
   colnames(ped4a) <- NULL
   ped4b <- rbind(c("Pedigree-Information","SampleInfo",rep("",3)),colnames(ped3),cbind(ped3,rep("",nrow(ped3)),rep("",nrow(ped3))))
   colnames(ped4b) <- NULL
   ped4 <- rbind(as.matrix(ped4a),as.matrix(ped4b))
-  write.table(x=ped4,file=paste(outstem,"ped.csv",sep="_"),quote = FALSE,na="NN",col.names=FALSE,sep=",",row.names=F)
+  write.table(x=ped4,file=paste(outstem,"rabbit_ped.csv",sep=""),quote = FALSE,na="NN",col.names=FALSE,sep=",",row.names=F)
 }

@@ -9,7 +9,7 @@ rabbit_diallel(ped, geno, geno.founder, map, outstem)
 \arguments{
 \item{ped}{data frame with pedigree (pop,parent1,parent2)}
 
-\item{geno}{named list of genotype matrices (markers x indiv), one for each population in \code{ped}}
+\item{geno}{list of genotype matrices (markers x indiv), one for each population in \code{ped}}
 
 \item{geno.founder}{matrix of genotype data for the founders (markers x indiv)}
 
