@@ -54,7 +54,9 @@ rabbit_diallel <- function(ped,geno,geno.founder,map,outstem) {
   
   ped4a <- rbind(c("Pedigree-Information","DesignPedigree",rep("",3)),colnames(ped2),ped2)
   colnames(ped4a) <- NULL
-  ped4b <- rbind(c("Pedigree-Information","SampleInfo",rep("",3)),colnames(ped3),cbind(ped3,rep("",nrow(ped3)),rep("",nrow(ped3))))
+  ped4b <- rbind(c("Pedigree-Information","SampleInfo",rep("",3)),
+                 c(colnames(ped3),rep("",2)),
+                 cbind(ped3,rep("",nrow(ped3)),rep("",nrow(ped3))))
   colnames(ped4b) <- NULL
   ped4 <- rbind(as.matrix(ped4a),as.matrix(ped4b))
   write.table(x=ped4,file=paste(outstem,"rabbit_ped.csv",sep=""),quote = FALSE,na="NN",col.names=FALSE,sep=",",row.names=F)
