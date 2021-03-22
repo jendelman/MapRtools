@@ -4,15 +4,14 @@
 #'
 #' Converts progeny genotypes so that the "0" allele reflects the haplotype inherited from parent 1 and the "1" allele reflects the haplotype from parent 2.
 #'
-#' @param geno Matrix of genotypes (markers x indiv)
-#' @param pop.type One of the following: "DH","BC","F2","RIL.self", or "RIL.sib".  Note that phase cannot be inferred from the parents directly for S1 populations.
-#' @param par1 chr indicating the column name for parent 1
-#' @param par2 chr indicating the column name for parent 2
+#' @param geno A matrix of genotypes (markers x individuals) coded "0/0", "1/1" or "0/1"
+#' @param par1 chr indicating the column name of parent 1
+#' @param par2 chr indicating the column name of parent 2
 
-#' @return A matrix with parental lines removed, and genotypes recoded
+#' @return A matrix with parental lines removed, and genotypes recoded to reflect parental haplotypes
 #' @export
 
-recodeGenotypes <- function(geno, par1, par2, pop.type){
+recodeGenotypes <- function(geno, par1, par2){
   par1.idx <- which(colnames(geno) == par1)
   par2.idx <- which(colnames(geno) == par2)
   
@@ -26,32 +25,17 @@ recodeGenotypes <- function(geno, par1, par2, pop.type){
     par1.geno <- geno[m,par1.idx]
     par2.geno <- geno[m,par2.idx]
     
-    if(!is.na(par1.geno) & !is.na(par2.geno))
+    if(!is.na(par1.geno) & !is.na(par2.geno)){
       
-      if(pop.type = "F2" | pop.type = "DH" | "RIL.self" | "RIL.sib"){
-        if(par1.geno == "0/0" && par2.geno == "1/1"){
-          geno.converted[mrk.idx, ] <- geno[m,]
-          rownames(geno.converted)[mrk.idx] <- rownames(geno)[m]
-          mrk.idx <- mrk.idx + 1
-        }
-        else if(par1.geno == "1/1" && par2.geno == "0/0"){
-          geno.converted[mrk.idx, ] <- chartr("01", "10", geno[m, ])
-          rownames(geno.converted)[mrk.idx] <- rownames(geno)[m]
-          mrk.idx <- mrk.idx + 1
-        }
+      if(par1.geno == "0/0" && par2.geno == "1/1"){
+        geno.converted[mrk.idx, ] <- geno[m,]
+        rownames(geno.converted)[mrk.idx] <- rownames(geno)[m]
+        mrk.idx <- mrk.idx + 1
       }
-      
-      if(pop.type = "BC"){
-        if(par1.geno == "0/0"){
-          geno.converted[mrk.idx, ] <- geno[m,]
-          rownames(geno.converted)[mrk.idx] <- rownames(geno)[m]
-          mrk.idx <- mrk.idx + 1
-        }
-        else if(par1.geno == "1/1"){
-          geno.converted[mrk.idx, ] <- chartr("01", "10", geno[m, ])
-          rownames(geno.converted)[mrk.idx] <- rownames(geno)[m]
-          mrk.idx <- mrk.idx + 1
-        }
+      else if(par1.geno == "1/1" && par2.geno == "0/0"){
+        geno.converted[mrk.idx, ] <- chartr("01", "10", geno[m, ])
+        rownames(geno.converted)[mrk.idx] <- rownames(geno)[m]
+        mrk.idx <- mrk.idx + 1
       }
     }
   }
