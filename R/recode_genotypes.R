@@ -11,7 +11,7 @@
 #' @return A matrix with parental lines removed, and genotypes recoded to reflect parental haplotypes
 #' @export
 
-recodeGenotypes <- function(geno, par1, par2){
+recode_genotypes <- function(geno, par1, par2){
   par1.idx <- which(colnames(geno) == par1)
   par2.idx <- which(colnames(geno) == par2)
   
