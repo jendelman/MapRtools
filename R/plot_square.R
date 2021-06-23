@@ -4,7 +4,7 @@
 #'
 #' Can be used to plot squared correlation, recomb frequency, LOD and more. By default, \code{lims} equals (0,median,max) 
 #'
-#' @param data squared correlation matrix
+#' @param data square matrix
 #' @param lims numeric 3-vector with the low,mid,high points for the colors
 #' 
 #' @return ggplot2 variable
