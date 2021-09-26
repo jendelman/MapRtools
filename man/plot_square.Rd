@@ -7,7 +7,7 @@
 plot_square(data, lims = NULL)
 }
 \arguments{
-\item{data}{squared correlation matrix}
+\item{data}{square matrix}
 
 \item{lims}{numeric 3-vector with the low,mid,high points for the colors}
 }
