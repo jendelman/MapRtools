@@ -10,11 +10,16 @@ S1_selection(x)
 \item{x}{Vector of progeny counts for the three possible genotypes (AA, AB, BB)}
 }
 \value{
-Data frame with columns "s" for the ML selection coefficient and "score" for the -log10(p) value.
+List containing
+\describe{
+\item{s}{selection coefficients}
+\item{model}{the gametic and zygotic selection modes (NA,1,2) for the best model}
+\item{score}{-log10(p) value}
+}
 }
 \description{
 Signatures of selection in S1 populations
 }
 \details{
-The null hypothesis is no selection, in which case the expected frequency of genotypes is (AA = 1/4, AB = 1/2, BB = 1/4). Four alternate hypotheses are tested, corresponding to 1. gametic selection in one sex, 2. gametic selection in both sexes, 3. zygotic selection against one homozygote, 4. zygotic selection against both homozygotes. The selection coefficient (s) is estimated by maximum likelihood on the interval [-1,1], where positive values correspond to selection against A or AA and negative values are for selection against B or BB. For model 4, positive values represent selection against homozygotes, while negative values indicate selection against heterozygotes.  P-values are computed based on the likelihood ratio test; in other words, the change in deviance is assumed to be chi-squared (df = 1) distributed under the null hypothesis.
+The null hypothesis is no selection, in which case the expected frequency of genotypes is (AA = 1/4, AB = 1/2, BB = 1/4). Two alternate hypotheses, or "modes", are tested for gametic selection: 1.selection in one sex, 2.selection in both sexes. Two modes of zygotic selection are also tested: 1.selection against one homozygote, 2.selection against both homozygotes. In addition to these 4 models with pure gametic or zygotic selection, 4 models with both forms of selection are considered (2 gametic modes x 2 zygotic modes = 4 models). The selection coefficients and -log10(p) value are returned for the model with the lowest AIC. The selection coefficients represent the sum of the absolute differences between the observed and expected frequencies. Positive values correspond to selection against A or AA, negative values for selection against B or BB. For zygotic mode 2, positive values represent selection against homozygotes, while negative values indicate selection against heterozygotes.  P-values are computed based on the likelihood ratio test; in other words, the change in deviance is assumed to be chi-squared distributed under the null hypothesis.
 }

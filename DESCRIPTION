@@ -9,6 +9,6 @@ License: GPL-3
 LazyData: true
 RoxygenNote: 7.1.1
 Encoding: UTF-8
-Imports: ggplot2, scam, seriation, CVXR, Matrix, HMM
+Imports: ggplot2, scam, seriation, CVXR, Matrix, HMM, optimx
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
