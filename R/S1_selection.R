@@ -5,6 +5,7 @@
 #' The null hypothesis is no selection, in which case the expected frequency of genotypes is (AA = 1/4, AB = 1/2, BB = 1/4). Two alternate hypotheses, or "modes", are tested for gametic selection: 1.selection in one sex, 2.selection in both sexes. Two modes of zygotic selection are also tested: 1.selection against one homozygote, 2.selection against both homozygotes. In addition to these 4 models with pure gametic or zygotic selection, 4 models with both forms of selection are considered (2 gametic modes x 2 zygotic modes = 4 models). The selection coefficients and -log10(p) value are returned for the model with the lowest AIC. The selection coefficients represent the sum of the absolute differences between the observed and expected frequencies. Positive values correspond to selection against A or AA, negative values for selection against B or BB. For zygotic mode 2, positive values represent selection against homozygotes, while negative values indicate selection against heterozygotes.  P-values are computed based on the likelihood ratio test; in other words, the change in deviance is assumed to be chi-squared distributed under the null hypothesis.
 #' 
 #' @param x Vector of progeny counts for the three possible genotypes (AA, AB, BB)
+#' @param pure.modes When FALSE, combined gametic and selection modes are tested
 #' 
 #' @return List containing
 #' \describe{
@@ -19,7 +20,7 @@
 #' @export
 #' 
 
-S1_selection <- function(x) {
+S1_selection <- function(x,pure.modes=TRUE) {
   
   freq <- function(s,mode) {
 
@@ -79,9 +80,16 @@ S1_selection <- function(x) {
     return(sum(x*log(p)))
   }
   
-  cases <- expand.grid(1:2,1:2)
+  cases <- rbind(c(1,NA),c(2,NA),c(NA,1),c(NA,2))
   colnames(cases) <- c("gamete","zygote")
-  cases <- split(rbind(cases,c(1,NA),c(2,NA),c(NA,1),c(NA,2)),1:8)
+  n.param <- rep(1,4)
+  if (!pure.modes) {
+    n.param <- c(n.param,rep(2,4))
+    tmp <- expand.grid(1:2,1:2)
+    colnames(tmp) <- colnames(cases)
+    cases <- rbind(cases,tmp)
+  }
+  cases <- split(cases,1:nrow(cases))
   suppressWarnings(ans <- lapply(cases,function(mode){
     mode <- as.integer(mode)
     if (any(is.na(mode))) {
@@ -97,7 +105,7 @@ S1_selection <- function(x) {
     }
   }))
   
-  AIC <- 2*c(2,2,2,2,1,1,1,1) - 2*sapply(ans,"[[",2)
+  AIC <- 2*n.param - 2*sapply(ans,"[[",2)
   
   LL0 <- LL(s=c(0,0),x=x,mode=c(1,1))
   k <- which.min(AIC)

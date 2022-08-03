@@ -4,10 +4,12 @@
 \alias{S1_selection}
 \title{Signatures of selection in S1 populations}
 \usage{
-S1_selection(x)
+S1_selection(x, pure.modes = TRUE)
 }
 \arguments{
 \item{x}{Vector of progeny counts for the three possible genotypes (AA, AB, BB)}
+
+\item{pure.modes}{When FALSE, combined gametic and selection modes are tested}
 }
 \value{
 List containing

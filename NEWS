@@ -1,3 +1,6 @@
+Changes in 0.25
+* Added argument pure.modes to S1_selection
+
 Changes in 0.24
 * Added S1_selection function
 
