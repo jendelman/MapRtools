@@ -1,3 +1,6 @@
+Changes in 0.26
+* S1_selection reverted to only 4 models, now applies to entire genome and returns plot.
+
 Changes in 0.25
 * Added argument pure.modes to S1_selection
 
