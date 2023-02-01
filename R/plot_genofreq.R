@@ -32,6 +32,6 @@ plot_genofreq <- function(geno,thresh=0.1,span=0.3) {
   plotme <- data.frame(y1=c(gf[1,],gf[2,],gf[3,]),y2=c(lans[[1]]$fitted,lans[[2]]$fitted,lans[[3]]$fitted),x=rep(1:m,3),genotype=factor(rep(c("0","1","2"),each=m)),outlier=factor(ifelse(1:m %in% outliers,1,2)))
   col <- c("red","black")
   names(col) <- 1:2
-  p <- ggplot(data=plotme,aes(x=x,colour=outlier)) + geom_point(mapping=aes(y=y1)) + facet_wrap(~genotype,ncol=1,nrow=3) + theme_bw() + xlab("") + ylab("Frequency") + geom_line(aes(y=y2),col="blue") + scale_color_manual(name="",values=col) + guides(colour=FALSE)
+  p <- ggplot(data=plotme,aes(x=x,colour=outlier)) + geom_point(mapping=aes(y=y1)) + facet_wrap(~genotype,ncol=1,nrow=3) + theme_bw() + xlab("") + ylab("Frequency") + geom_line(aes(y=y2),col="blue") + scale_color_manual(name="",values=col) + guides(colour="none")
   return(list(outliers=rownames(geno)[outliers],plot=p))
 }

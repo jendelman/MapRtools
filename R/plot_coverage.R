@@ -13,6 +13,7 @@
 #' @import ggplot2
 #'
 plot_coverage <- function(map,limits=NULL) {
+  map$position <- map$position/1e6
   if (is.null(limits)) {
     tmp <- tapply(map$position,map$chrom,max)
     limits <- data.frame(chrom=names(tmp),position=as.numeric(tmp))
@@ -25,6 +26,6 @@ plot_coverage <- function(map,limits=NULL) {
   yend <- c(k+0.1,1:n.chrom)
   x <- c(map$position,rep(0,n.chrom))
   xend <- c(map$position,limits$position)
-  p <- ggplot(data=data.frame(x=x,y=y,xend=xend,yend=yend),aes(x=x,y=y,xend=xend,yend=yend)) +  geom_segment() + theme_bw() + xlab("Position") + scale_y_continuous(name="Chromosome",breaks=1:n.chrom,labels=chroms,minor_breaks=NULL)
+  p <- ggplot(data=data.frame(x=x,y=y,xend=xend,yend=yend),aes(x=x,y=y,xend=xend,yend=yend)) +  geom_segment() + theme_bw() + xlab("Position (Mb)") + scale_y_continuous(name="Chromosome",breaks=1:n.chrom,labels=chroms,minor_breaks=NULL)
   return(p)
 }
