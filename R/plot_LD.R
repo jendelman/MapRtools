@@ -44,7 +44,7 @@ plot_LD <- function(r2,map,max.pair=1e4,dof=8) {
   }
   
   #Hexbin plot
-  p <- ggplot(data=result,aes(x=d,y=r2)) + stat_binhex(mapping=aes(colour=..count..)) + ylab(expression(r^2)) + xlab("Distance") + theme_bw() + ylim(0,1)
+  p <- ggplot(data=result,aes(x=d,y=r2)) + geom_hex() + ylab(expression(r^2)) + xlab("Distance") + theme_bw() + ylim(0,1)
   
   #Spline
   max.pair <- min(max.pair,nrow(result))
