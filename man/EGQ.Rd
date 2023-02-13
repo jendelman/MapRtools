@@ -4,7 +4,7 @@
 \alias{EGQ}
 \title{Expected Genotype Quality}
 \usage{
-EGQ(depth, error, ploidy)
+EGQ(depth, error, ploidy, prior)
 }
 \arguments{
 \item{depth}{read count}
@@ -12,6 +12,8 @@ EGQ(depth, error, ploidy)
 \item{error}{allelic error}
 
 \item{ploidy}{ploidy}
+
+\item{prior}{numeric vector of length ploidy + 1}
 }
 \value{
 numeric scalar
