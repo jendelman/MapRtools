@@ -40,7 +40,7 @@ LG <- function(LODmat,thresh=seq(2,20,by=2)) {
                           stripe=factor(rep(1:max.clust,times=n.thresh),ordered=T,levels=seq(max.clust,1,-1)))
   
     stripe.color <- rep(c("red","white"),ceiling(max.clust/2))[1:max.clust]
-    p <- ggplot(plot.data,aes(y=count,x=thresh,fill=stripe)) + geom_col(position="stack",colour="black") + scale_fill_manual(values=stripe.color) + guides(fill=FALSE) + theme_bw() + xlab("Threshold")
+    p <- ggplot(plot.data,aes(y=count,x=thresh,fill=stripe)) + geom_col(position="stack",colour="black") + scale_fill_manual(values=stripe.color) + guides(fill="none") + theme_bw() + xlab("Threshold")
     return(p)
   }
 }
