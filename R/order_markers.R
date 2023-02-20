@@ -8,7 +8,7 @@
 #' 
 #' @return a list containing
 #' \describe{
-#' \item{path}{optimized order as a vector of integers}
+#' \item{order}{optimized order as a vector of integers}
 #' \item{distance}{sum of adjacent distances}
 #' }
 #' 
@@ -18,8 +18,13 @@
 order_markers <- function(x) {
   o <- seriate(as.dist(x),method="TSP")
   path <- get_order(o)
+  m <- length(path)
+  rev.path <- path[seq(m,1,-1)]
+  if (sum(diff(rev.path)) > sum(diff(path)))
+    path <- rev.path
+  
   x_ordered <- x[path,path]
   m <- nrow(x)
   d <- x_ordered[cbind(1:(m-1),2:m)]
-  return(list(path=path,distance=sum(d)))
+  return(list(order=path,distance=sum(d)))
 }

@@ -12,7 +12,7 @@ order_markers(x)
 \value{
 a list containing
 \describe{
-\item{path}{optimized order as a vector of integers}
+\item{order}{optimized order as a vector of integers}
 \item{distance}{sum of adjacent distances}
 }
 }

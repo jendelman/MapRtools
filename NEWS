@@ -1,5 +1,6 @@
 Changes in 0.29
 * Renamed plot_haplo as plot_geno
+* Renamed output from order_markers
 
 Changes in 0.28
 * Added EGQ

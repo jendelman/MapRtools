@@ -2,18 +2,21 @@
 #' 
 #' Graphical genotyping
 #' 
-#' Input matrix \code{geno} should have rownames attribute that matches marker names in the first column of \code{map}. 
+#' Input matrix \code{geno} should have rownames attribute that matches marker names in the first column of \code{map} (when present). 
 #' 
 #' @param geno genotype matrix (markers x indiv)
-#' @param map data frame with 3 columns (marker, chrom, position)
+#' @param map optional data frame with 3 columns (marker, chrom, position)
 #' 
 #' @return ggplot object 
 #' 
 #' @export
 #' @import ggplot2
 
-plot_geno <- function(geno,map) {
+plot_geno <- function(geno,map=NULL) {
   
+  if (is.null(map)) {
+    map <- data.frame(marker=rownames(geno),chrom="1",position=1:nrow(geno))
+  }
   map$marker <- as.character(map$marker)
   markers <- rownames(geno)
   stopifnot(markers %in% map$marker)
