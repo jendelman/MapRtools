@@ -1,3 +1,6 @@
+Changes in 0.29
+* Renamed plot_haplo as plot_geno
+
 Changes in 0.28
 * Added EGQ
 

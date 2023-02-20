@@ -12,7 +12,7 @@
 #' @export
 #' @import ggplot2
 
-plot_haplo <- function(geno,map) {
+plot_geno <- function(geno,map) {
   
   map$marker <- as.character(map$marker)
   markers <- rownames(geno)
