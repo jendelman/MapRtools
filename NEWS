@@ -1,3 +1,6 @@
+Changes in 0.30
+* map is now optional for plot_genoprob
+
 Changes in 0.29
 * Renamed plot_haplo as plot_geno
 * Renamed output from order_markers

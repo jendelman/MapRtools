@@ -4,12 +4,12 @@
 \alias{plot_genoprob}
 \title{Plot genotype probabilities for one chromosome}
 \usage{
-plot_genoprob(genoprob, map)
+plot_genoprob(genoprob, map = NULL)
 }
 \arguments{
 \item{genoprob}{matrix (markers x genotypes) of probabilities for one individual}
 
-\item{map}{map data frame (markers,chrom,position)}
+\item{map}{optional data frame with 3 columns (marker, chrom, position)}
 }
 \value{
 ggplot object

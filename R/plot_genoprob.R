@@ -5,15 +5,18 @@
 #' Names for the genotypes are taken from the colnames of \code{genoprob}.
 #' 
 #' @param genoprob matrix (markers x genotypes) of probabilities for one individual
-#' @param map map data frame (markers,chrom,position)
+#' @param map optional data frame with 3 columns (marker, chrom, position)
 #' 
 #' @return ggplot object 
 #' 
 #' @export
 #' @import ggplot2
 
-plot_genoprob <- function(genoprob,map) {
+plot_genoprob <- function(genoprob,map=NULL) {
 
+  if (is.null(map)) {
+    map <- data.frame(marker=rownames(genoprob),chrom="1",position=1:nrow(genoprob))
+  }
   colnames(map) <- c("marker","chrom","position")
   map$marker <- as.character(map$marker)
   markers <- rownames(genoprob)
