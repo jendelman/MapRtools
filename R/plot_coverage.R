@@ -13,11 +13,16 @@
 #' @import ggplot2
 #'
 plot_coverage <- function(map,limits=NULL) {
+  colnames(map) <- c("chrom","position")
   map$position <- map$position/1e6
   if (is.null(limits)) {
     tmp <- tapply(map$position,map$chrom,max)
     limits <- data.frame(chrom=names(tmp),position=as.numeric(tmp))
+  } else {
+    limits$position <- limits$position/1e6
   }
+  limits <- limits[order(limits$chrom,limits$position),]
+  map <- map[order(map$chrom,map$position),]
   map$chrom <- as.character(map$chrom)
   chroms <- unique(map$chrom)
   n.chrom <- length(chroms)
