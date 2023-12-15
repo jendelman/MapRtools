@@ -11,6 +11,7 @@
 #' 
 #' @return numeric scalar
 #' @export
+#' @importFrom stats dbinom
 #' @references Matias et al. (2019) Plant Genome 12:190002. https://doi.org/10.3835/plantgenome2019.01.0002
 
 EGQ <- function(depth,error,ploidy,prior) {

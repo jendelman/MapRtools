@@ -1,3 +1,6 @@
+Changes in 0.32
+* interpolate_cM function added
+
 Changes in 0.30
 * map is now optional for plot_genoprob
 
