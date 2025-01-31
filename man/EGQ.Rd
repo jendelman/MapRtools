@@ -4,26 +4,21 @@
 \alias{EGQ}
 \title{Expected Genotype Quality}
 \usage{
-EGQ(depth, error, ploidy, prior)
+EGQ(DP, error, prior)
 }
 \arguments{
-\item{depth}{read count}
+\item{DP}{read depth}
 
 \item{error}{allelic error}
-
-\item{ploidy}{ploidy}
 
 \item{prior}{numeric vector of length ploidy + 1}
 }
 \value{
-numeric scalar
+numeric vector of length ploidy + 1
 }
 \description{
 Expected Genotype Quality for Binomial Model
 }
 \details{
-As defined in Matias et al. (2019), EGQ is the PHRED-scaled expected error of the genotype call, conditional on the true genotype. This function returns EGQ for the genotype most frequently miscalled, which is the balanced heterozygote (i.e., ploidy/2).
-}
-\references{
-Matias et al. (2019) Plant Genome 12:190002. https://doi.org/10.3835/plantgenome2019.01.0002
+Expected GQ conditional on the true allele dosage (0,1,2,...ploidy)
 }

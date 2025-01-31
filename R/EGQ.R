@@ -2,34 +2,42 @@
 #' 
 #' Expected Genotype Quality for Binomial Model
 #' 
-#' As defined in Matias et al. (2019), EGQ is the PHRED-scaled expected error of the genotype call, conditional on the true genotype. This function returns EGQ for the genotype most frequently miscalled, which is the balanced heterozygote (i.e., ploidy/2).
+#' Expected GQ conditional on the true allele dosage (0,1,2,...ploidy)
 #' 
-#' @param depth read count
+#' @param DP read depth
 #' @param error allelic error
-#' @param ploidy ploidy
 #' @param prior numeric vector of length ploidy + 1
 #' 
-#' @return numeric scalar
+#' @return numeric vector of length ploidy + 1
 #' @export
 #' @importFrom stats dbinom
-#' @references Matias et al. (2019) Plant Genome 12:190002. https://doi.org/10.3835/plantgenome2019.01.0002
 
-EGQ <- function(depth,error,ploidy,prior) {
-  
-  posterior <- function(k,N,error,ploidy,prior){
-    p <- seq(0,1,by=1/ploidy)
-    q <- 1-p
-    z <- dbinom(x=k,size=N,prob=p*(1-error)+q*error)*prior
-    names(z) <- 0:ploidy
-    return(z/sum(z))
+EGQ <- function(DP,error,prior) {
+
+  likelihood <- function(n,eps,ploidy){
+    ans <- NULL
+    for (z in 0:ploidy) {
+      psi <- z/ploidy
+      ans <- rbind(ans,
+                   data.frame(z=z,
+                              k=0:n,
+                              prob=dbinom(x=0:n,size=n,prob=psi*(1-eps)+(1-psi)*eps)))
+    }
+    return(ans)
   }
-  
-  f1 <- function(N,error,ploidy,prior) {
-    k <- seq(0,N,by=1)
-    p <- apply(array(k),1,posterior,N=N,error=error,ploidy=ploidy,prior=prior)
-    geno.mode <- apply(p,2,which.max)-1
-    prob.error <- sum(dbinom(k,N,prob=0.5)[which(geno.mode!=ploidy/2)])
-    return(-10*log10(prob.error))
+
+  posterior <- function(n,eps,ploidy,prior) {
+    tmp <- likelihood(n,eps,ploidy)
+    tmp$posterior <- tmp$prob*rep(prior,each=n+1)
+    denom <- rep(tapply(tmp$posterior,tmp$k,sum),times=ploidy+1)
+    tmp$posterior <- tmp$posterior/denom
+    return(tmp)
   }
-  min(apply(array(depth:(depth+10)),1,f1,error=error,ploidy=ploidy,prior=prior))
+  ploidy <- length(prior) - 1
+  tmp <- posterior(n=DP,eps=error,ploidy=ploidy,prior=prior)
+  GQ <- -10*log10(tapply(tmp$posterior,tmp$k,function(z){1-max(z)}))
+  tmp <- likelihood(n=DP,eps=error,ploidy=ploidy)
+  #sum(GQ*tapply(tmp$prob*rep(prior,each=DP+1),tmp$k,sum))
+  tapply(rep(GQ,ploidy+1)*tmp$prob,tmp$z,sum)
 }
+
