@@ -1,8 +1,10 @@
-#' Plot and filter markers based on genotype frequency vs position
+#' Plot and filter markers based on haplotype frequency vs position
 #' 
-#' Plot and filter markers based on genotype frequency vs position
+#' Plot and filter markers based on haplotype frequency vs position
 #' 
-#' Genotypes should be coded 0,1,2. Markers are removed if their residual to the fitted spline exceeds \code{thresh}. Markers are assumed to be ordered. Function designed to be used for one chromosome.
+#' This functions works for mapping populations derived from two inbred founders. The \code{geno} matrix must be coded based on the dosage (0,1,2) of one founder haplotype.
+#' 
+#' Markers are removed if their residual to the fitted spline exceeds \code{thresh}. Markers are assumed to be ordered. Function designed to be used for one chromosome.
 #' 
 #' @param geno haplotype dosage matrix (markers x indiv)
 #' @param thresh threshold for removing markers (see Details)
@@ -10,14 +12,14 @@
 #' 
 #' @return List containing
 #' \describe{
-#' \item{outliers}{character vector of marker names}
+#' \item{outliers}{index of outlier markers}
 #' \item{plot}{ggplot2 variable}
 #' }
 #' @export
 #' @importFrom stats loess
 #' @import ggplot2
 
-plot_genofreq <- function(geno,thresh=0.1,span=0.3) {
+plot_haplofreq <- function(geno,thresh=0.1,span=0.3) {
   m <- nrow(geno)
   n <- ncol(geno)
   gf <- apply(geno,1,function(x){table(factor(x,levels=0:2))})/n
@@ -33,5 +35,5 @@ plot_genofreq <- function(geno,thresh=0.1,span=0.3) {
   col <- c("red","black")
   names(col) <- 1:2
   p <- ggplot(data=plotme,aes(x=x,colour=outlier)) + geom_point(mapping=aes(y=y1)) + facet_wrap(~genotype,ncol=1,nrow=3) + theme_bw() + xlab("") + ylab("Frequency") + geom_line(aes(y=y2),col="blue") + scale_color_manual(name="",values=col) + guides(colour="none")
-  return(list(outliers=rownames(geno)[outliers],plot=p))
+  return(list(outliers=outliers,plot=p))
 }

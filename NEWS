@@ -1,5 +1,6 @@
 Changes in 0.34
 * Modified plot_map to include marker curation
+* Renamed plot_genofreq to plot_haplofreq
 
 Changes in 0.33
 * Modified EGQ function
