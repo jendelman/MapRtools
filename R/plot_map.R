@@ -73,5 +73,5 @@ plot_map <- function(data,thresh=NULL,span=0.3) {
       theme(text = element_text(size=13), 
             panel.grid.major.x = element_blank()) + guides(colour="none") + ylab("")
   }
-  return(list(outliers=outliers,p=p))
+  return(list(outliers=outliers,plot=p))
 }
