@@ -2,16 +2,29 @@
 % Please edit documentation in R/plot_map.R
 \name{plot_map}
 \alias{plot_map}
-\title{Plots data against map}
+\title{Plot data against position and curate based on trend}
 \usage{
-plot_map(data)
+plot_map(data, thresh = NULL, span = 0.3)
 }
 \arguments{
-\item{data}{data frame with 3 columns: chrom, position, y (the plotting variable)}
+\item{data}{data frame with 3 columns: chrom, position, plotting variable}
+
+\item{thresh}{threshold for removing markers (see Details)}
+
+\item{span}{smoothing parameter for loess spline (higher = less smooth)}
 }
 \value{
 ggplot
+
+List containing
+\describe{
+\item{outliers}{outlier positions}
+\item{plot}{ggplot2 variable}
+}
 }
 \description{
-Plots data against map
+Plot data against position and curate based on trend
+}
+\details{
+For data from a single chromosome, markers are removed when their residual to the fitted spline exceeds \code{thresh}. If NULL, no curation occurs.
 }

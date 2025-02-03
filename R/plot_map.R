@@ -1,16 +1,25 @@
-#' Plots data against map
+#' Plot data against position and curate based on trend
 #' 
-#' Plots data against map
+#' Plot data against position and curate based on trend
 #' 
-#' @param data data frame with 3 columns: chrom, position, y (the plotting variable)
+#' For data from a single chromosome, markers are removed when their residual to the fitted spline exceeds \code{thresh}. If NULL, no curation occurs.
 #' 
+#' @param data data frame with 3 columns: chrom, position, plotting variable
+#' @param thresh threshold for removing markers (see Details)
+#' @param span smoothing parameter for loess spline (higher = less smooth)
+#'
 #' @return ggplot
 #'
-#' @import ggplot2
+#' @return List containing
+#' \describe{
+#' \item{outliers}{outlier positions}
+#' \item{plot}{ggplot2 variable}
+#' }
 #' @export
-#' 
+#' @importFrom stats loess
+#' @import ggplot2
 
-plot_map <- function(data) {
+plot_map <- function(data,thresh=NULL,span=0.3) {
   
   get_x <- function(map) {
     #takes a map with chrom and position and returns x axis values for plotting multiple chromosomes
@@ -21,19 +30,37 @@ plot_map <- function(data) {
     x <- map[,2] + rep(b,times=m)
     return(x)
   }
+  trait <- colnames(data)[3]
+  m <- nrow(data)
   colnames(data) <- c("chrom","pos","y")
   data$chrom <- as.character(data$chrom)
   chrom <- unique(data$chrom)
   data$pos <- as.integer(data$pos)
   nchr <- length(unique(data$chrom))
   data$color <- factor(ifelse(as.integer(factor(data$chrom))%%2==1,1,0))
+
+  outliers <- integer(0)
   
-  if (nchr==1) {
-    data$x <- data$pos/1e6 
-    p <- ggplot(data=data,aes(x=.data$x,y=.data$y)) + 
-      geom_point() + theme_bw() +
-      theme(text = element_text(size=13)) + 
-      xlab("Position (Mb)") 
+  if (nchr==1L) {
+    lans <- loess(y~x,data.frame(y=data$y,x=data$pos),span=span)
+    data$fitted <- lans$fitted
+    
+    if (!is.null(thresh)) {
+      data$outlier <- ifelse(abs(lans$residuals) > thresh,"1","0")
+      outliers <- which(data$outlier=="1")
+      col <- c("0"="black","1"="red")
+      p <- ggplot(data=data,aes(x=pos,colour=outlier)) + 
+        geom_point(mapping=aes(y=y)) + 
+        geom_line(mapping=aes(y=fitted),col="blue",linetype=2) + 
+        theme_bw() + xlab("") + ylab(trait) + 
+        scale_color_manual(name="",values=col) + guides(colour="none")
+    } else {
+      p <- ggplot(data=data,aes(x=pos)) + 
+        geom_point(mapping=aes(y=y)) + 
+        geom_line(mapping=aes(y=fitted),col="blue",linetype=2) + 
+        theme_bw() + xlab("") + ylab(trait)
+    }
+    
   } else {
     data$x <- get_x(data[,1:2])
     break1 <- (tapply(data$x,data$chrom,max) + tapply(data$x,data$chrom,min))/2
@@ -46,5 +73,5 @@ plot_map <- function(data) {
       theme(text = element_text(size=13), 
             panel.grid.major.x = element_blank()) + guides(colour="none") + ylab("")
   }
-  return(p)
+  return(list(outliers=outliers,p=p))
 }

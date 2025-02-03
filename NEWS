@@ -1,3 +1,6 @@
+Changes in 0.34
+* Modified plot_map to include marker curation
+
 Changes in 0.33
 * Modified EGQ function
 
