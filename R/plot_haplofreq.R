@@ -22,7 +22,9 @@
 plot_haplofreq <- function(geno,thresh=0.1,span=0.3) {
   m <- nrow(geno)
   n <- ncol(geno)
-  gf <- apply(geno,1,function(x){table(factor(x,levels=0:2))})/n
+  gf <- apply(geno,1,function(x){
+    table(factor(x,levels=0:2))/sum(!is.na(x))
+    })
   outliers <- integer(0)
   lans <- vector("list",3)
   for (i in 1:3) {

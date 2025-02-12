@@ -1,3 +1,6 @@
+Changes in 0.35
+* Genotype frequencies now account for missing data in plot_haplofreq
+
 Changes in 0.34
 * Modified plot_map to include marker curation
 * Renamed plot_genofreq to plot_haplofreq
