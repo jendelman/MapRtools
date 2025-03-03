@@ -5,8 +5,8 @@
 #' It is assumed that only segregating markers are present. Progeny reconstruction occurs using an HMM with a uniform transition probability matrix, based on an average recombination frequency \code{r}, and a uniform model for the genotype \code{error}.
 #' 
 #' @param geno ordered genotype matrix (markers x indiv) for one chromosome
-#' @param r average recombination frequency to use for the HMM
 #' @param error average genotype error to use for the HMM
+#' @param n.core number of cores (default is 1)
 #' 
 #' @return List containing
 #' \describe{
@@ -16,9 +16,9 @@
 #' @export
 #' @importFrom HMM initHMM viterbi
 
-S1_haplo <- function(geno,r,error) {
+S1_haplo <- function(geno,error,n.core=1) {
   
-  ans <- MLEL(geno=geno,pop.type="S1",LOD=FALSE,n.core=1,adjacent=TRUE)
+  ans <- MLEL(geno=geno,pop.type="S1",LOD=FALSE,n.core=n.core,adjacent=TRUE)
   m <- nrow(geno)
   hap1 <- integer(m)
   for (i in 2:m) {
@@ -42,14 +42,22 @@ S1_haplo <- function(geno,r,error) {
                                       }}))
                 
   #Apply HMM
+  r <- median(ans$value,na.rm=T)
   s <- 1-r
   T.mat <- rbind(c(s^2,2*r*s,r^2),
               c(r*s,s^2+r^2,r*s),
               c(r^2,2*r*s,s^2))
+  rownames(T.mat) <- colnames(T.mat) <- c("0","1","2")
+  
+  missing <- min(1e-3, sum(is.na(geno))/length(geno))
   E.mat <- rbind(c(1-error,error/2,error/2),
                  c(error/2,1-error,error/2),
                  c(error/2,error/2,1-error))
-  hmm <- initHMM(States=as.character(0:2),Symbols=as.character(0:2),
+  E.mat <- cbind(E.mat - missing/3,rep(missing,3))
+  rownames(E.mat) <- c("0","1","2")
+  colnames(E.mat) <- c("0","1","2","NA")
+  
+  hmm <- initHMM(States=rownames(E.mat),Symbols=colnames(E.mat),
                  startProbs=c(1,2,1)/4,
                  transProbs=T.mat,
                  emissionProbs=E.mat)
@@ -58,7 +66,7 @@ S1_haplo <- function(geno,r,error) {
   geno.hmm <- geno2 #initialize to get same dimensions and names
   for (i in 1:n) {
     input <- as.character(geno2[,i])
-    input[is.na(input)] <- "1" #this software does not handle missing data
+    input[is.na(input)] <- "NA" #this software does not handle missing data
     out <- viterbi(hmm,observation=input)  #returns ML solution
     geno.hmm[,i] <- as.integer(out) #convert from character back to integer
   }

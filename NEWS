@@ -1,3 +1,7 @@
+Changes in 0.36
+* map_fn now handles vector input for r
+* S1_haplo now estimates r from the data for the HMM and allows missing data
+
 Changes in 0.35
 * Genotype frequencies now account for missing data in plot_haplofreq
 

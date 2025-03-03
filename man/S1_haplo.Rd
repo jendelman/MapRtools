@@ -4,14 +4,14 @@
 \alias{S1_haplo}
 \title{Phase S1 parent and reconstruct progeny in terms of parental haplotypes}
 \usage{
-S1_haplo(geno, r, error)
+S1_haplo(geno, error, n.core = 1)
 }
 \arguments{
 \item{geno}{ordered genotype matrix (markers x indiv) for one chromosome}
 
-\item{r}{average recombination frequency to use for the HMM}
-
 \item{error}{average genotype error to use for the HMM}
+
+\item{n.core}{number of cores (default is 1)}
 }
 \value{
 List containing
