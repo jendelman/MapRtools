@@ -35,10 +35,11 @@ plot_map <- function(data,thresh=NULL,span=0.3) {
   colnames(data) <- c("chrom","pos","y")
   data$chrom <- as.character(data$chrom)
   chrom <- unique(data$chrom)
+  nchr <- length(chrom)
+  data$chrom <- factor(data$chrom,levels=chrom,ordered=T)
   data$pos <- as.integer(data$pos)
-  nchr <- length(unique(data$chrom))
-  data$color <- factor(ifelse(as.integer(factor(data$chrom))%%2==1,1,0))
-
+  data$color <- factor(ifelse(as.integer(data$chrom)%%2==1,1,0))
+  
   outliers <- integer(0)
   
   if (nchr==1L) {
